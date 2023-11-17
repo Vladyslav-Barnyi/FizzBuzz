@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace FizzBuzzTests;
 
 public class AdvancedFizzBuzzTests
@@ -10,7 +12,7 @@ public class AdvancedFizzBuzzTests
         
         foreach (var output in sut) {
             if (x % 3 == 0 && x % 5 == 0)
-                Assert.Contains("FizzBuzz", output);
+                output.Should().Contain("FizzBuzz");
             
             x++;
         }
@@ -24,7 +26,7 @@ public class AdvancedFizzBuzzTests
         
         foreach (var output in sut) {
             if (x % 3 == 0 || x.ToString().Contains('3'))
-                Assert.Contains("Fizz", output);
+                 output.Should().Contain("Fizz");
             
             x++;
         }
@@ -39,7 +41,7 @@ public class AdvancedFizzBuzzTests
         foreach (var output in sut)
         {
             if (x % 5 == 0 || x.ToString().Contains('5'))
-                Assert.Contains("Buzz", output);
+                output.Should().Contain("Buzz");
             
             x++;
         }

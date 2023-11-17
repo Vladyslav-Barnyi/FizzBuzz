@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace FizzBuzzTests;
 
 public class BasicFizzBuzzTests
@@ -12,7 +14,7 @@ public class BasicFizzBuzzTests
         
         var expected = new List<string> { "x must be equal to 1" };
 
-        Assert.Equal(expected, sut);
+        expected.Should().BeEquivalentTo(sut);
     }
     
     [Fact]
@@ -23,7 +25,7 @@ public class BasicFizzBuzzTests
         
         foreach (var output in sut) {
             if (x % 3 == 0 && x % 5 == 0)
-                Assert.Equal("FizzBuzz", output);
+                output.Should().BeEquivalentTo("FizzBuzz");
             
             x++;
         }
@@ -37,7 +39,7 @@ public class BasicFizzBuzzTests
         
         foreach (var output in sut) {
             if (x % 3 == 0)
-                Assert.Contains("Fizz", output);
+                output.Should().Contain("Fizz");
             
             x++;
         }
@@ -52,7 +54,7 @@ public class BasicFizzBuzzTests
         foreach (var output in sut)
         {
             if (x % 5 == 0)
-                Assert.Contains("Buzz", output);
+                output.Should().Contain("Buzz");
             
             x++;
         }
