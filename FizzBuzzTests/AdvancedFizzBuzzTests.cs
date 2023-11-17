@@ -1,3 +1,4 @@
+using FizzBuzz;
 using FluentAssertions;
 
 namespace FizzBuzzTests;
@@ -8,7 +9,7 @@ public class AdvancedFizzBuzzTests
     public void CheckEachForBeing_FizzBuzz()
     {
         var x = 1;
-        var sut = FizzBuzz.Program.FizzBuzzAdvanced();
+        var sut = Program.FizzBuzzAdvanced();
         
         foreach (var output in sut) {
             if (x % 3 == 0 && x % 5 == 0)
@@ -22,7 +23,7 @@ public class AdvancedFizzBuzzTests
     public void CheckEachForContaining_Fizz()
     {
         var x = 1;
-        var sut = FizzBuzz.Program.FizzBuzzAdvanced();
+        var sut = Program.FizzBuzzAdvanced();
         
         foreach (var output in sut) {
             if (x % 3 == 0 || x.ToString().Contains('3'))
@@ -36,7 +37,7 @@ public class AdvancedFizzBuzzTests
     public void CheckEachForContaining_Buzz()
     {
         var x = 1;
-        var sut = FizzBuzz.Program.FizzBuzzAdvanced();
+        var sut = Program.FizzBuzzAdvanced();
         
         foreach (var output in sut)
         {
