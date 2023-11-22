@@ -1,64 +1,89 @@
 using FizzBuzz;
+using FizzBuzz.Service;
 using FluentAssertions;
 
 namespace FizzBuzzTests;
 
 public class BasicFizzBuzzTests
 {
+    private readonly FizzBuzzService _sut;
 
-    [Theory]
-    [InlineData(3)]
-    [InlineData(0)]
-    [InlineData(-15)]
-    public void If_x_is_not_equal_to_1(int x)
+    public BasicFizzBuzzTests()
     {
-        var sut = Program.FizzBuzzBasic(x);
-        
-        var expected = new List<string> { "x must be equal to 1" };
+        _sut = new FizzBuzzService();
+    }
 
-        expected.Should().BeEquivalentTo(sut);
+    [Test]
+    [TestCase(33,true)]
+    [TestCase(77,false)]
+    public void IsDividedBy3_Should_ReturnExpectedBool(int number, bool expected)
+    {
+        var actual = _sut.IsDividedBy3(number);
+
+        actual.Should().Be(expected);
     }
     
-    [Fact]
-    public void CheckEachForBeing_FizzBuzz()
+    [Test]
+    [TestCase(55,true)]
+    [TestCase(77,false)]
+    public void IsDividedBy5_Should_ReturnExpectedBool(int number, bool expected)
     {
-        var x = 1;
-        var sut = Program.FizzBuzzBasic(x);
-        
-        foreach (var output in sut) {
-            if (x % 3 == 0 && x % 5 == 0)
-                output.Should().BeEquivalentTo("FizzBuzz");
-            
-            x++;
-        }
+        var actual = _sut.IsDividedBy5(number);
+
+        actual.Should().Be(expected);
+    }
+
+    [Test]
+    [TestCase("Fizz", 2)]
+    [TestCase("Fizz", 98)]
+    public void FizzBuzzBasic_ShouldReturnFizz_ForMultiplesOfThree(string expected, int loopNumber)
+    {
+        var result = _sut.FizzBuzzBasic();
+
+        result[loopNumber].Should().Be(expected);
+    }
+
+    [Test]
+    [TestCase("Buzz", 4)]
+    [TestCase("Buzz", 99)]
+    public void FizzBuzzBasic_ShouldReturnBuzz_ForMultiplesOfFive(string expected, int loopNumber)
+    {
+        var result = _sut.FizzBuzzBasic();
+
+        result[loopNumber].Should().Be(expected);
     }
     
-    [Fact]
-    public void CheckEachForContaining_Fizz()
+    [Test]
+    [TestCase("FizzBuzz", 14)]
+    [TestCase("FizzBuzz", 89)]
+    public void FizzBuzzBasic_ShouldReturnFizzBuzz_ForMultiplesOfThreeAndFive(string expected, int loopNumber)
     {
-        var x = 1;
-        var sut = Program.FizzBuzzBasic(x);
-        
-        foreach (var output in sut) {
-            if (x % 3 == 0)
-                output.Should().Contain("Fizz");
-            
-            x++;
-        }
+        var result = _sut.FizzBuzzBasic();
+
+        result[loopNumber].Should().Be(expected);
     }
     
-    [Fact]
-    public void CheckEachForContaining_Buzz()
+    [Test]
+    [TestCase("1", 0)]
+    [TestCase("98", 97)]
+    public void FizzBuzzBasic_ShouldReturnSameNumber_ForNonMultiplesOfThreeAndFive(string expected, int loopNumber)
     {
-        var x = 1;
-        var sut = Program.FizzBuzzBasic(x);
-        
-        foreach (var output in sut)
+        var result = _sut.FizzBuzzBasic();
+
+        result[loopNumber].Should().Be(expected);
+    }
+
+    [Test]
+    public void FizzBuzzBasic_ShouldMatchProvidedList()
+    {
+        var expected = new []
         {
-            if (x % 5 == 0)
-                output.Should().Contain("Buzz");
-            
-            x++;
-        }
+            "1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11",
+            "Fizz", "13", "14", "FizzBuzz", "16", "17", "Fizz", "19", "Buzz"
+        };
+
+        var result = _sut.FizzBuzzBasic().Take(20);
+
+        result.Should().BeEquivalentTo(expected);
     }
 }
